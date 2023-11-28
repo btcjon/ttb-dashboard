@@ -1,9 +1,11 @@
 import dynamic from 'next/dynamic';
 
-const PositionsPage = dynamic(
-  () => import('./PositionsPageComponent'),
-  { ssr: false }
-);
+const PositionsPageComponent = dynamic(() => import('./PositionsPageComponent'), {
+  ssr: false,
+  loading: () => <p>Loading...</p>
+});
 
-export default PositionsPage;
+export default function PositionsPage() {
+  return <PositionsPageComponent />;
+}
 
