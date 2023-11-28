@@ -1,36 +1,21 @@
+import React, { useState, useEffect } from 'react';
 import PageHeader from '@/app/shared/page-header';
 import { metaObject } from '@/config/site.config';
 import ControlledTable from '@/components/controlled-table';
-import fs from 'fs';
-import path from 'path';
 
-// Function to parse positions data from the file
-function parsePositionsData(filePath) {
-  const data = fs.readFileSync(filePath, 'utf8');
-  return data.split('\n').filter(line => line.trim()).map(line => {
-    try {
-      return JSON.parse(line);
-    } catch (error) {
-      console.error('Error parsing line:', line, error);
-      return null;
-    }
-  }).filter(position => position);
-}
+// Placeholder function to fetch positions from MetaApi
+// Replace this with actual API call or integration with get_positions.py
+const getPositionsFromMetaApi = async () => {
+  // TODO: Implement the actual API call to fetch positions
+  return [];
+};
 
-// Path to the positions.txt file
-const positionsFilePath = path.resolve(__dirname, 'positions.txt');
-
-// Parse positions data from the file
-const parsedPositions = parsePositionsData(positionsFilePath);
-
-// Map parsed positions to table data format
-const tableData = parsedPositions.map(position => ({
-  Symbol: position.symbol,
-  Type: position.type.includes('BUY') ? 'Buy' : 'Sell',
-  Volume: position.volume,
-  Profit: position.profit,
-  Swap: position.swap
-}));
+// Placeholder function to process positions data
+// Replace this with actual logic to process and aggregate positions data
+const processPositions = (positions) => {
+  // TODO: Implement the actual logic to process positions
+  return positions;
+};
 
 export const metadata = {
   ...metaObject('Positions'),
@@ -49,13 +34,6 @@ const pageHeader = {
   ],
 };
 
-// Example data and columns for the table
-const tableData = [
-  { Symbol: 'EUR/USD', Type: 'Buy', Volume: 1.0, Profit: 150.00, Swap: -0.50 },
-  { Symbol: 'USD/JPY', Type: 'Sell', Volume: 0.5, Profit: -75.00, Swap: -0.20 },
-  { Symbol: 'GBP/USD', Type: 'Buy', Volume: 0.1, Profit: 20.00, Swap: 0.00 },
-  // Add more entries as needed
-];
 const columns = [
   { title: 'Symbol', dataIndex: 'Symbol', key: 'Symbol' },
   { title: 'Type', dataIndex: 'Type', key: 'Type' },
@@ -66,15 +44,34 @@ const columns = [
 ];
 
 export default function PositionsPage() {
+  const [positions, setPositions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPositions = async () => {
+      setIsLoading(true);
+      try {
+        const fetchedPositions = await getPositionsFromMetaApi();
+        const processedPositions = processPositions(fetchedPositions);
+        setPositions(processedPositions);
+      } catch (error) {
+        console.error('Error fetching positions:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPositions();
+  }, []);
+
   return (
     <>
       <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
       <ControlledTable
-        isLoading={false} // Set to true if data is being loaded
-        data={tableData}
+        isLoading={isLoading}
+        data={positions}
         columns={columns}
         className="mt-4"
-        // Add any additional props you need for ControlledTable
       />
     </>
   );
