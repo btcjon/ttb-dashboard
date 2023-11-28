@@ -1,6 +1,36 @@
 import PageHeader from '@/app/shared/page-header';
 import { metaObject } from '@/config/site.config';
 import ControlledTable from '@/components/controlled-table';
+import fs from 'fs';
+import path from 'path';
+
+// Function to parse positions data from the file
+function parsePositionsData(filePath) {
+  const data = fs.readFileSync(filePath, 'utf8');
+  return data.split('\n').filter(line => line.trim()).map(line => {
+    try {
+      return JSON.parse(line);
+    } catch (error) {
+      console.error('Error parsing line:', line, error);
+      return null;
+    }
+  }).filter(position => position);
+}
+
+// Path to the positions.txt file
+const positionsFilePath = path.resolve(__dirname, 'positions.txt');
+
+// Parse positions data from the file
+const parsedPositions = parsePositionsData(positionsFilePath);
+
+// Map parsed positions to table data format
+const tableData = parsedPositions.map(position => ({
+  Symbol: position.symbol,
+  Type: position.type.includes('BUY') ? 'Buy' : 'Sell',
+  Volume: position.volume,
+  Profit: position.profit,
+  Swap: position.swap
+}));
 
 export const metadata = {
   ...metaObject('Positions'),
