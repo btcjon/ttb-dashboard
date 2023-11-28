@@ -1,5 +1,4 @@
 import { MetaApi } from 'metaapi.cloud-sdk';
-import fs from 'fs';
 
 // your MetaApi API token
 let token = process.env.TOKEN || '<put in your token here>';
@@ -25,4 +24,4 @@ async function getAccountOpenTrades() {
   process.exit();
 }
 
-module.exports = getAccountOpenTrades;
+export default getAccountOpenTrades;
