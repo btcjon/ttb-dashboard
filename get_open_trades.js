@@ -1,23 +1,23 @@
+import { MetaApi } from 'metaapi.cloud-sdk';
 import fs from 'fs';
-import { MetaStats } from 'metaapi.cloud-sdk';
 
 // your MetaApi API token
 let token = process.env.TOKEN || '<put in your token here>';
 // your MetaApi account id
 let accountId = process.env.ACCOUNT_ID || '<put in your MetaApi account id here>';
 
-const metaStats = new MetaStats(token);
+const api = new MetaApi(token);
 
 async function getAccountOpenTrades() {
   try {
-    let openTrades = await metaStats.getAccountOpenTrades(accountId);
-    // Define the filename where the output will be saved
-    let filename = 'openTradesOutput.json';
-    // Convert the openTrades object to a string in JSON format
-    let data = JSON.stringify(openTrades, null, 2);
-    // Write the data to a file
-    fs.writeFileSync(filename, data);
-    console.log(`Open trades have been written to ${filename}`);
+    const account = await api.metatraderAccountApi.getAccount(accountId);
+    await account.deploy();
+    await account.waitConnected();
+    let connection = account.getRPCConnection();
+    await connection.connect();
+    await connection.waitSynchronized();
+    let openTrades = await connection.getPositions();
+    // The rest of the code remains the same
 
   } catch (err) {
     console.error(err);
