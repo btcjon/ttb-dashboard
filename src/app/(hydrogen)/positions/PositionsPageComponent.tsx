@@ -1,4 +1,3 @@
-/* @client */
 import React, { useState, useEffect } from 'react';
 import { MetaApi } from 'metaapi.cloud-sdk';
 import PageHeader from '@/app/shared/page-header';
@@ -23,47 +22,12 @@ const getPositionsFromMetaApi = async () => {
   }));
 };
 
-// Function to process positions data
-// This function should be implemented to match the structure of your positions data
-// and the way you want to display it in the table.
-const processPositions = (positions) => {
-  // Adjust the implementation to match your needs
-  // This is just a placeholder function that returns the positions as is
-  return positions;
-};
-
 // MetaApi connection details
 const token = process.env.META_API_TOKEN; // Assumes you have META_API_TOKEN in your .env file
 const accountId = process.env.META_API_ACCOUNT_ID; // Assumes you have META_API_ACCOUNT_ID in your .env file
 const api = new MetaApi(token);
 
-export const metadata = {
-  ...metaObject('Positions'),
-};
-
-const pageHeader = {
-  title: 'Positions',
-  breadcrumb: [
-    {
-      href: '/',
-      name: 'Home',
-    },
-    {
-      name: 'Positions',
-    },
-  ],
-};
-
-const columns = [
-  { title: 'Symbol', dataIndex: 'Symbol', key: 'Symbol' },
-  { title: 'Type', dataIndex: 'Type', key: 'Type' },
-  { title: 'Volume', dataIndex: 'Volume', key: 'Volume' },
-  { title: 'Profit', dataIndex: 'Profit', key: 'Profit' },
-  { title: 'Swap', dataIndex: 'Swap', key: 'Swap' },
-  // Add more columns as needed
-];
-
-export default function PositionsPage() {
+export default function PositionsPageComponent() {
   const [positions, setPositions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -72,8 +36,7 @@ export default function PositionsPage() {
       setIsLoading(true);
       try {
         const fetchedPositions = await getPositionsFromMetaApi();
-        const processedPositions = processPositions(fetchedPositions);
-        setPositions(processedPositions);
+        setPositions(fetchedPositions);
       } catch (error) {
         console.error('Error fetching positions:', error);
       } finally {
@@ -84,9 +47,18 @@ export default function PositionsPage() {
     fetchPositions();
   }, []);
 
+  const columns = [
+    { title: 'Symbol', dataIndex: 'Symbol', key: 'Symbol' },
+    { title: 'Type', dataIndex: 'Type', key: 'Type' },
+    { title: 'Volume', dataIndex: 'Volume', key: 'Volume' },
+    { title: 'Profit', dataIndex: 'Profit', key: 'Profit' },
+    { title: 'Swap', dataIndex: 'Swap', key: 'Swap' },
+    // Add more columns as needed
+  ];
+
   return (
     <>
-      <PageHeader title={pageHeader.title} breadcrumb={pageHeader.breadcrumb} />
+      <PageHeader title="Positions" breadcrumb={[{ href: '/', name: 'Home' }, { name: 'Positions' }]} />
       <ControlledTable
         isLoading={isLoading}
         data={positions}
