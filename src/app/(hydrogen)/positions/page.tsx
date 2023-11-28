@@ -21,10 +21,18 @@ const pageHeader = {
 
 // Example data and columns for the table
 const tableData = [
-  // Add your table data here
+  { Symbol: 'EUR/USD', Type: 'Buy', Volume: 1.0, Profit: 150.00, Swap: -0.50 },
+  { Symbol: 'USD/JPY', Type: 'Sell', Volume: 0.5, Profit: -75.00, Swap: -0.20 },
+  { Symbol: 'GBP/USD', Type: 'Buy', Volume: 0.1, Profit: 20.00, Swap: 0.00 },
+  // Add more entries as needed
 ];
 const columns = [
-  // Define your table columns here
+  { title: 'Symbol', dataIndex: 'Symbol', key: 'Symbol' },
+  { title: 'Type', dataIndex: 'Type', key: 'Type' },
+  { title: 'Volume', dataIndex: 'Volume', key: 'Volume' },
+  { title: 'Profit', dataIndex: 'Profit', key: 'Profit' },
+  { title: 'Swap', dataIndex: 'Swap', key: 'Swap' },
+  // Add more columns as needed
 ];
 
 export default function PositionsPage() {
