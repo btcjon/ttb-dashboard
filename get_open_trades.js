@@ -1,5 +1,5 @@
-let fs = require('fs');
-let MetaStats = require('metaapi.cloud-sdk').MetaStats;
+import fs from 'fs';
+import { MetaStats } from 'metaapi.cloud-sdk';
 
 // your MetaApi API token
 let token = process.env.TOKEN || '<put in your token here>';
