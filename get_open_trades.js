@@ -1,4 +1,5 @@
-import { MetaApi } from 'metaapi.cloud-sdk';
+import pkg from 'metaapi.cloud-sdk';
+const { MetaApi } = pkg;
 
 // your MetaApi API token
 let token = process.env.TOKEN || '<put in your token here>';
