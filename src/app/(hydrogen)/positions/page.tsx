@@ -1,4 +1,4 @@
-use client;
+/* @client */
 import React, { useState, useEffect } from 'react';
 import { MetaApi } from 'metaapi.cloud-sdk';
 import PageHeader from '@/app/shared/page-header';
