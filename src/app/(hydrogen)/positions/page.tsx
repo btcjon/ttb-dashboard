@@ -28,8 +28,8 @@ const processPositions = (positions) => {
 };
 
 // MetaApi connection details
-const token = 'your-metaapi-token'; // Replace with your actual MetaApi token
-const accountId = 'your-account-id'; // Replace with your actual MetaApi account ID
+const token = process.env.META_API_TOKEN; // Assumes you have META_API_TOKEN in your .env file
+const accountId = process.env.META_API_ACCOUNT_ID; // Assumes you have META_API_ACCOUNT_ID in your .env file
 const api = new MetaApi(token);
 
 export const metadata = {
