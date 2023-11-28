@@ -4,7 +4,7 @@ Objective: User dashboard with real-time forex data via metaapi using 'isomorphi
 
 - [x] Real-time data implementation:
 - [x] Create `src/services/metaApiService.js`.
-  - [ ] test for function `src/services/metaApiService.js`.
+  - [x] test for function `src/services/metaApiService.js`.
 - [ ] Develop trade table component:
   - [x] Define columns: Symbol, Type, Volume, Profit, Swap.
 - [ ] Prepare 'Isomorphic' Template Page and Table:

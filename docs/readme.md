@@ -19,7 +19,7 @@ Objective: User dashboard with real-time forex data via metaapi.
   - [x] Integrate existing code:
           - [x] Understand structure.
           - [x] Create new page for testing table. isomorphic/src/app/(hydrogen)/positions/page.tsx
-          - [ ] create the table component as per the isomorphic template guide.  See `docs/howto_table.md` ONLY use isomorphic provided components,styles, methods etc.
+          - [x] create the table component as per the isomorphic template guide.  See `docs/howto_table.md` ONLY use isomorphic provided components,styles, methods etc.
           - [ ] Move `src/services/metaApiService.js` to inside the approproate place in the isomorphic folder
           - [ ] Refactor data-fetching.
           - [ ] Test integration.
