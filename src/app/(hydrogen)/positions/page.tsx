@@ -14,16 +14,31 @@ const getPositionsFromMetaApi = async (api, accountId) => {
 };
 
 // Function to process positions data
+// This function should be implemented to match the structure of your positions data
+// and the way you want to display it in the table.
 const processPositions = (positions) => {
-  // Implement the actual logic to process positions
-  // For example, aggregate positions by symbol or calculate total P/L
-  // This is a placeholder and may need to be adjusted based on actual requirements
-  return positions.map(position => ({
-    Symbol: position.symbol,
-    Type: position.type,
-    Volume: position.volume,
-    Profit: position.profit,
-    Swap: position.swap
+  // Example implementation (you should adjust this to your needs):
+  // Group positions by symbol and calculate total volume and P/L for each symbol
+  const groupedPositions = positions.reduce((acc, position) => {
+    const { symbol, type, volume, profit } = position;
+    if (!acc[symbol]) {
+      acc[symbol] = { symbol, buyVolume: 0, sellVolume: 0, profit: 0 };
+    }
+    if (type === 'BUY') {
+      acc[symbol].buyVolume += volume;
+    } else if (type === 'SELL') {
+      acc[symbol].sellVolume += volume;
+    }
+    acc[symbol].profit += profit;
+    return acc;
+  }, {});
+
+  // Convert the grouped positions object into an array of position data
+  return Object.values(groupedPositions).map(group => ({
+    Symbol: group.symbol,
+    BuyVolume: group.buyVolume,
+    SellVolume: group.sellVolume,
+    Profit: group.profit.toFixed(2) // Assuming profit is a number and needs to be formatted
   }));
 };
 
