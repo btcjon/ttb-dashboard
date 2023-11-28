@@ -5,41 +5,30 @@ import { metaObject } from '@/config/site.config';
 import ControlledTable from '@/components/controlled-table';
 
 // Function to fetch positions from MetaApi
-const getPositionsFromMetaApi = async (api, accountId) => {
+const getPositionsFromMetaApi = async () => {
+  // Assuming that the MetaApi and accountId are already defined in the scope
   const account = await api.metatraderAccountApi.getAccount(accountId);
   const connection = account.getStreamingConnection();
   await connection.connect();
   await connection.waitSynchronized();
-  return await connection.get_positions();
+  const positions = await connection.get_positions();
+  return positions.map(position => ({
+    // Adjust the structure to match your actual position data
+    Symbol: position.symbol,
+    Type: position.type,
+    Volume: position.volume,
+    Profit: position.profit.toFixed(2), // Format the profit to two decimal places
+    Swap: position.swap.toFixed(2) // Format the swap to two decimal places
+  }));
 };
 
 // Function to process positions data
 // This function should be implemented to match the structure of your positions data
 // and the way you want to display it in the table.
 const processPositions = (positions) => {
-  // Example implementation (you should adjust this to your needs):
-  // Group positions by symbol and calculate total volume and P/L for each symbol
-  const groupedPositions = positions.reduce((acc, position) => {
-    const { symbol, type, volume, profit } = position;
-    if (!acc[symbol]) {
-      acc[symbol] = { symbol, buyVolume: 0, sellVolume: 0, profit: 0 };
-    }
-    if (type === 'BUY') {
-      acc[symbol].buyVolume += volume;
-    } else if (type === 'SELL') {
-      acc[symbol].sellVolume += volume;
-    }
-    acc[symbol].profit += profit;
-    return acc;
-  }, {});
-
-  // Convert the grouped positions object into an array of position data
-  return Object.values(groupedPositions).map(group => ({
-    Symbol: group.symbol,
-    BuyVolume: group.buyVolume,
-    SellVolume: group.sellVolume,
-    Profit: group.profit.toFixed(2) // Assuming profit is a number and needs to be formatted
-  }));
+  // Adjust the implementation to match your needs
+  // This is just a placeholder function that returns the positions as is
+  return positions;
 };
 
 // MetaApi connection details
