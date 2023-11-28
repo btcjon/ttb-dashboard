@@ -34,13 +34,15 @@ async def get_positions():
         print('Getting positions')
         positions = await connection.get_positions()
 
-        # Save positions to a file
-        with open('positions.txt', 'w') as f:
-            for position in positions:
-                f.write("%s\n" % position)
+        # Print positions to the console (or handle them as needed)
+        print('Positions:', positions)
 
+        # Optionally, you can still save to a file or handle the data as needed
+        # ...
+
+        # Close the connection if it was not initially deployed
         if initial_state not in deployed_states:
-            print('Undeploying account')
+            print('Closing connection and undeploying account')
             await connection.close()
             await account.undeploy()
 
