@@ -1,4 +1,3 @@
-/* @client */
 import dynamic from 'next/dynamic';
 
 const PositionsPageComponent = dynamic(() => import('./PositionsPageComponent'), {
@@ -7,6 +6,7 @@ const PositionsPageComponent = dynamic(() => import('./PositionsPageComponent'),
 });
 
 export default function PositionsPage() {
+  /* @client */
   return <PositionsPageComponent />;
 }
 
