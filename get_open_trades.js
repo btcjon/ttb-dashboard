@@ -1,3 +1,4 @@
+let fs = require('fs');
 let MetaStats = require('metaapi.cloud-sdk').MetaStats;
 
 // your MetaApi API token
@@ -10,7 +11,13 @@ const metaStats = new MetaStats(token);
 async function getAccountOpenTrades() {
   try {
     let openTrades = await metaStats.getAccountOpenTrades(accountId);
-    console.log(openTrades);//-> {_id: ..., gain: ..., ...}
+    // Define the filename where the output will be saved
+    let filename = 'openTradesOutput.json';
+    // Convert the openTrades object to a string in JSON format
+    let data = JSON.stringify(openTrades, null, 2);
+    // Write the data to a file
+    fs.writeFileSync(filename, data);
+    console.log(`Open trades have been written to ${filename}`);
 
   } catch (err) {
     console.error(err);
