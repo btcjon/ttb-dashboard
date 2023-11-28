@@ -1,21 +1,36 @@
 import React, { useState, useEffect } from 'react';
+import { MetaApi } from 'metaapi.cloud-sdk';
 import PageHeader from '@/app/shared/page-header';
 import { metaObject } from '@/config/site.config';
 import ControlledTable from '@/components/controlled-table';
 
-// Placeholder function to fetch positions from MetaApi
-// Replace this with actual API call or integration with get_positions.py
-const getPositionsFromMetaApi = async () => {
-  // TODO: Implement the actual API call to fetch positions
-  return [];
+// Function to fetch positions from MetaApi
+const getPositionsFromMetaApi = async (api, accountId) => {
+  const account = await api.metatraderAccountApi.getAccount(accountId);
+  const connection = account.getStreamingConnection();
+  await connection.connect();
+  await connection.waitSynchronized();
+  return await connection.get_positions();
 };
 
-// Placeholder function to process positions data
-// Replace this with actual logic to process and aggregate positions data
+// Function to process positions data
 const processPositions = (positions) => {
-  // TODO: Implement the actual logic to process positions
-  return positions;
+  // Implement the actual logic to process positions
+  // For example, aggregate positions by symbol or calculate total P/L
+  // This is a placeholder and may need to be adjusted based on actual requirements
+  return positions.map(position => ({
+    Symbol: position.symbol,
+    Type: position.type,
+    Volume: position.volume,
+    Profit: position.profit,
+    Swap: position.swap
+  }));
 };
+
+// MetaApi connection details
+const token = 'your-metaapi-token'; // Replace with your actual MetaApi token
+const accountId = 'your-account-id'; // Replace with your actual MetaApi account ID
+const api = new MetaApi(token);
 
 export const metadata = {
   ...metaObject('Positions'),
