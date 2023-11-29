@@ -22,11 +22,9 @@ export default function PositionsPage() {
               symbol: trade.symbol,
               type: trade.type,
               volume: trade.volume,
-              unrealizedProfit: trade.unrealizedProfit,
-              swap: trade.swap,
-              realizedSwap: trade.realizedSwap,
-              unrealizedSwap: trade.unrealizedSwap,
-            }));`, {
+              profit: trade.profit, // Assuming 'profit' is the correct field name
+              // Removed the swap fields as they are not mentioned in the request
+            }));
         });
         
         console.log(processedData); 
