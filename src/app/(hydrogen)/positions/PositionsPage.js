@@ -26,13 +26,14 @@ export default function PositionsPage() {
           }
         });
             
-        if (!Array.isArray(response.data)) {
-          console.error('Expected an array of trades, but got:', response.data);
+        const tradesData = response.data.openTrades || [];
+        if (!Array.isArray(tradesData)) {
+          console.error('Expected an array of trades, but got:', tradesData);
           setIsLoading(false);
           return;
         }
-        console.log('Response data:', response.data);
-        const processedData = response.data.map(trade => ({
+        console.log('Response data:', tradesData);
+        const processedData = tradesData.map(trade => ({
           symbol: trade.symbol,
           type: trade.tradeType,
           volume: trade.volume,
