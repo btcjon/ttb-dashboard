@@ -10,7 +10,3 @@ export default function PositionsPage() {
   /* @client */
   return <PositionsPageComponent />;
 }
-
-export default function PositionsPage() {
-  return <PositionsPageComponent />;
-}
