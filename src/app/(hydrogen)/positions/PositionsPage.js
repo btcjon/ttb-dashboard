@@ -24,7 +24,7 @@ export default function PositionsPage() {
               volume: trade.volume,
               profit: trade.profit
             }));
-            console.log(processedData); 
+            console.log(processedData);
             setData(processedData);
             setIsLoading(false);
         });
