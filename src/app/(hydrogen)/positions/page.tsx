@@ -6,7 +6,5 @@ const PositionsPageComponent = dynamic(() => import('./PositionsPageComponent'),
 });
 
 export default function PositionsPage() {
-  /* @client */
   return <PositionsPageComponent />;
 }
-
