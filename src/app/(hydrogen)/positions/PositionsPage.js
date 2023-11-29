@@ -14,22 +14,22 @@ export default function PositionsPage() {
       try {
         const accountId = process.env.REACT_APP_META_API_ACCOUNT_ID;
         const apiToken = process.env.REACT_APP_META_API_TOKEN;
-        const response = await axios.get(`https://metastats-api-v1.new-york.agiliumtrade.ai/users/current/accounts/${accountId}/open-trades?api_key=${apiToken}`
+        const response = await axios.get(`https://metastats-api-v1.new-york.agiliumtrade.ai/users/current/accounts/${accountId}/open-trades?api_key=${apiToken}`, {
           headers: {
             'Accept': 'application/json',
-            'auth-token': '${apiToken}`, {
-            });
-            
-            const processedData = response.data.map(trade => ({
-              symbol: trade.symbol,
-              type: trade.tradeType,
-              volume: trade.volume,
-              profit: trade.profit
-            }));
-            console.log(processedData);
-            setData(processedData);
-            setIsLoading(false);
+            'auth-token': `${apiToken}`,
+          }
         });
+            
+        const processedData = response.data.map(trade => ({
+          symbol: trade.symbol,
+          type: trade.tradeType,
+          volume: trade.volume,
+          profit: trade.profit
+        }));
+        console.log(processedData);
+        setData(processedData);
+        setIsLoading(false);
       } catch (error) {
         console.error('Error fetching data: ', error);
         setIsLoading(false);
@@ -60,24 +60,9 @@ export default function PositionsPage() {
         key: 'volume',
       },
       {
-        title: 'Unrealized Profit',
-        dataIndex: 'unrealizedProfit',
-        key: 'unrealizedProfit',
-      },
-      {
-        title: 'Swap',
-        dataIndex: 'swap',
-        key: 'swap',
-      },
-      {
-        title: 'Realized Swap',
-        dataIndex: 'realizedSwap',
-        key: 'realizedSwap',
-      },
-      {
-        title: 'Unrealized Swap',
-        dataIndex: 'unrealizedSwap',
-        key: 'unrealizedSwap',
+        title: 'Profit',
+        dataIndex: 'profit',
+        key: 'profit',
       },
     ];
   };
