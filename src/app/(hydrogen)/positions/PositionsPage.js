@@ -71,7 +71,7 @@ export default function PositionsPage() {
     <ControlledTable
       isLoading={isLoading}
       data={data}
-      columns={getColumns()}
+      columns={getColumns}
       // other props...
     />
   );
