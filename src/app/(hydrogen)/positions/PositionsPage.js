@@ -12,8 +12,8 @@ export default function PositionsPage() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const accountId = process.env.REACT_APP_META_API_ACCOUNT_ID || '';
-        const apiToken = process.env.REACT_APP_META_API_TOKEN || '';
+        const accountId = process.env.NEXT_PUBLIC_META_API_ACCOUNT_ID || '';
+        const apiToken = process.env.NEXT_PUBLIC_META_API_TOKEN || '';
         if (!accountId || !apiToken) {
           console.error('Environment variables REACT_APP_META_API_ACCOUNT_ID and REACT_APP_META_API_TOKEN must be set.');
           setIsLoading(false);
