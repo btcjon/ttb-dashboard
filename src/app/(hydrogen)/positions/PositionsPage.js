@@ -32,7 +32,19 @@ export default function PositionsPage() {
           volume: trade.volume,
           profit: trade.profit
         }));
-        console.log(processedData);
+        console.log('Response data:', response.data);
+        if (!Array.isArray(response.data)) {
+          console.error('Expected an array of trades, but got:', response.data);
+          setIsLoading(false);
+          return;
+        }
+        const processedData = response.data.map(trade => ({
+          symbol: trade.symbol,
+          type: trade.tradeType,
+          volume: trade.volume,
+          profit: trade.profit
+        }));
+        console.log('Processed data:', processedData);
         setData(processedData);
         setIsLoading(false);
       } catch (error) {
