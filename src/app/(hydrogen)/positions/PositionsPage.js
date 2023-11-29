@@ -24,13 +24,13 @@ export default function PositionsPage() {
               volume: trade.volume,
               profit: trade.profit
             }));
+            console.log(processedData); 
+            setData(processedData);
+            setIsLoading(false);
         });
-        
-        console.log(processedData); 
-
-        setData(processedData);
       } catch (error) {
         console.error('Error fetching data: ', error);
+        setIsLoading(false);
       }
     };
 
