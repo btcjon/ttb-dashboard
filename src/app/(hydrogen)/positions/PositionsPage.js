@@ -42,7 +42,7 @@ export default function PositionsPage() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const getColumns = () => {
+  const getColumns = ({ data, sortConfig, checkedItems, handleSelectAll, onDeleteItem, onHeaderCellClick, onChecked }) => {
     return [
       {
         title: 'Symbol',
@@ -71,7 +71,7 @@ export default function PositionsPage() {
     <ControlledTable
       isLoading={isLoading}
       data={data}
-      columns={getColumns}
+      getColumns={getColumns}
       // other props...
     />
   );
